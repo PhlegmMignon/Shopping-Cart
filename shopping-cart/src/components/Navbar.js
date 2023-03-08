@@ -1,11 +1,20 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
     <div id="navbar">
-      <div id="storeName">Store</div>
-      <div id="navbarShop">Shop</div>
-      <div id="navbarCart">Cart</div>
+      <Link to="">
+        <h1 id="storeName">Store</h1>
+      </Link>
+      <div id="navChild">
+        <Link to="/shop">
+          <h2 id="navbarShop">Shop</h2>
+        </Link>
+        <Link to="/cart">
+          <h2 id="navbarCart">Cart</h2>
+        </Link>
+      </div>
     </div>
   );
 };
