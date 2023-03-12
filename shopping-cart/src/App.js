@@ -7,18 +7,25 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
 
 function App() {
-  const [items, setItems] = useState({ name: "", price: "" });
-  const [cart, setCart] = useState({});
+  const [items, setItems] = useState([{ name: "", price: "", id: "" }]);
+  const [cart, setCart] = useState([{ name: "", price: "", id: "" }]);
 
   return (
     <>
       <div className="App" data-testid="App">
         <Navbar />
         <Routes>
-          <Route path="/cart" element={<Cart />} />
+          <Route path="/cart" element={<Cart cart={cart} shop={items} />} />
           <Route
             path="/shop"
-            element={<Shop setItems={setItems} items={items} />}
+            element={
+              <Shop
+                setItems={setItems}
+                items={items}
+                setCart={setCart}
+                cart={cart}
+              />
+            }
           />
           <Route path="/" element={<Home />} />
         </Routes>

@@ -4,18 +4,21 @@ import App from "./App";
 import Cart from "./components/Cart";
 import Shop from "./components/Shop";
 import Navbar from "./components/Navbar";
-import { BrowserRouter } from "react-router-dom";
+import { MemoryRouter } from "react-router-dom";
+import userEvent from "@testing-library/user-event";
 
 describe("Renders each component", () => {
   it("renders app", () => {
     render(
-      <BrowserRouter>
+      <MemoryRouter>
         <App />
-      </BrowserRouter>
+      </MemoryRouter>
     );
-    const element = screen.getByTitle("App");
+    const element = screen.getByTestId("App");
+    const element2 = screen.getByTestId("navbar");
 
     expect(element).toBeInTheDocument();
+    expect(element2).toBeInTheDocument();
   });
 
   it("renders cart", () => {
@@ -32,3 +35,5 @@ describe("Renders each component", () => {
     expect(element).toBeInTheDocument();
   });
 });
+
+describe("Tab switching", () => {});
