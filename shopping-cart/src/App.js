@@ -8,7 +8,9 @@ import Home from "./components/Home";
 
 function App() {
   const [items, setItems] = useState([{ name: "", price: "", id: "" }]);
-  const [cart, setCart] = useState([{ name: "", price: "", id: "" }]);
+  const [cart, setCart] = useState([
+    { name: "", price: "", quantity: 0, id: "" },
+  ]);
 
   return (
     <>
@@ -24,6 +26,8 @@ function App() {
                 items={items}
                 setCart={setCart}
                 cart={cart}
+                // input={input}
+                // setInput={setInput}
               />
             }
           />

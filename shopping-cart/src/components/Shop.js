@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import uniqid from "uniqid";
 
 function Shop(props) {
+  const [input, setInput] = useState(0);
+
   useEffect(() => {
     props.setItems([
       { name: "Banana", price: "10", id: uniqid() },
@@ -9,23 +11,30 @@ function Shop(props) {
     ]);
   }, []);
 
-  const handleSubmit = (item) => {
-    let quantity = document.getElementById("quantity");
-    quantity = quantity.value;
-    console.log(quantity);
+  const handleSubmit = (item, e) => {
+    e.preventDefault();
+    console.log(item);
 
-    for (let i = 0; i < quantity; i++) {
-      props.cart[0].name == ""
-        ? props.setCart([{ name: item.name, price: item.price, id: uniqid() }])
-        : props.setCart([
-            ...props.cart,
-            { name: item.name, price: item.price, id: uniqid() },
-          ]);
-    }
-  };
+    props.cart[0].name == ""
+      ? props.setCart([
+          {
+            name: item.name,
+            price: item.price,
+            quantity: Number(input),
+            id: uniqid(),
+          },
+        ])
+      : props.setCart([
+          ...props.cart,
+          {
+            name: item.name,
+            price: item.price,
+            quantity: Number(input),
+            id: uniqid(),
+          },
+        ]);
 
-  const handleChange = (e) => {
-    //Create state [input, setinput]. Use input in handlesubmit
+    setInput(0);
   };
 
   return (
@@ -37,7 +46,7 @@ function Shop(props) {
             <div className="itemName">{item.name}</div>
             <div className="itemPrice">$ {item.price}</div>
 
-            <form onSubmit={handleSubmit(item)}>
+            <form onSubmit={(e) => handleSubmit(item, e)}>
               <label htmlFor="quantity">Qty: </label>
               <input
                 type="number"
@@ -45,7 +54,7 @@ function Shop(props) {
                 name="quantity"
                 min="1"
                 max="10"
-                onChange={handleChange()}
+                onChange={(e) => setInput(e.target.value)}
               />
               <button type="submit" id="addBtn">
                 Add to Cart

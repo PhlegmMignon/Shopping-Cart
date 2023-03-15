@@ -7,10 +7,14 @@ const Cart = (props) => {
     simplifyArray();
   }, [props.cart]);
 
+  // console.log(props.cart);
+
   const simplifyArray = () => {
     items = [];
 
-    props.cart.map((item) => items.push({ name: item.name, quantity: 1 }));
+    props.cart.map((item) =>
+      items.push({ name: item.name, quantity: item.quantity })
+    );
 
     if (items[0].name == "") items.shift();
 
