@@ -39,5 +39,9 @@ const Cart = (props) => {
   );
 };
 
+//Input field to incriment quantity
+//Display quantity in cart in navbar
+//Checkout btn clears cart
+
 //Cart get input from props.items.length to display # of items currently in cart
 export default Cart;

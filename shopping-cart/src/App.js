@@ -13,7 +13,7 @@ function App() {
   return (
     <>
       <div className="App" data-testid="App">
-        <Navbar />
+        <Navbar cart={cart} />
         <Routes>
           <Route path="/cart" element={<Cart cart={cart} shop={items} />} />
           <Route
