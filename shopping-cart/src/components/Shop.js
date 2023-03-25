@@ -13,7 +13,6 @@ function Shop(props) {
 
   const handleSubmit = (item, e) => {
     e.preventDefault();
-    console.log(item);
 
     props.cart[0].name == ""
       ? props.setCart([

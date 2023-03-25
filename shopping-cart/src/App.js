@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import Cart from "./components/Cart";
 import { Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
+import uniqid from "uniqid";
 
 function App() {
   const [items, setItems] = useState([{ name: "", price: "", id: "" }]);
@@ -12,12 +13,26 @@ function App() {
     { name: "", price: "", quantity: 0, id: "" },
   ]);
 
+  const [cartItems, setCartItems] = useState([
+    { name: "", quantity: "", id: uniqid() },
+  ]);
+
   return (
     <>
       <div className="App" data-testid="App">
         <Navbar cart={cart} />
         <Routes>
-          <Route path="/cart" element={<Cart cart={cart} shop={items} />} />
+          <Route
+            path="/cart"
+            element={
+              <Cart
+                cart={cart}
+                shop={items}
+                cartItems={cartItems}
+                setCartItems={setCartItems}
+              />
+            }
+          />
           <Route
             path="/shop"
             element={
