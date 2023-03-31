@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Shop from "./components/Shop";
 import Navbar from "./components/Navbar";
 import Cart from "./components/Cart";
@@ -13,26 +13,14 @@ function App() {
     { name: "", price: "", quantity: 0, id: "" },
   ]);
 
-  const [cartItems, setCartItems] = useState([
-    { name: "", quantity: "", id: uniqid() },
-  ]);
+  const lengthRef = useRef(0);
 
   return (
     <>
       <div className="App" data-testid="App">
         <Navbar cart={cart} />
         <Routes>
-          <Route
-            path="/cart"
-            element={
-              <Cart
-                cart={cart}
-                shop={items}
-                cartItems={cartItems}
-                setCartItems={setCartItems}
-              />
-            }
-          />
+          <Route path="/cart" element={<Cart cart={cart} shop={items} />} />
           <Route
             path="/shop"
             element={
@@ -41,6 +29,7 @@ function App() {
                 items={items}
                 setCart={setCart}
                 cart={cart}
+                lengthRef={lengthRef}
                 // input={input}
                 // setInput={setInput}
               />

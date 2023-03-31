@@ -37,3 +37,5 @@ describe("Renders each component", () => {
 });
 
 describe("Tab switching", () => {});
+
+//Renders nothing when cartitems is empty
