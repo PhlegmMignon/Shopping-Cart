@@ -20,7 +20,10 @@ function App() {
       <div className="App" data-testid="App">
         <Navbar cart={cart} />
         <Routes>
-          <Route path="/cart" element={<Cart cart={cart} shop={items} />} />
+          <Route
+            path="/cart"
+            element={<Cart cart={cart} setCart={setCart} shop={items} />}
+          />
           <Route
             path="/shop"
             element={
@@ -38,6 +41,7 @@ function App() {
           <Route path="/" element={<Home />} />
         </Routes>
       </div>
+      <div id="portal"></div>
     </>
   );
 

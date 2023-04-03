@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import uniqid from "uniqid";
+import Checkout from "./Checkout";
 
 const Cart = (props) => {
   const [cartItems, setCartItems] = useState([]);
@@ -9,15 +10,24 @@ const Cart = (props) => {
 
   useEffect(() => {
     simplifyArray();
+    console.log(props.cart);
   }, [props.cart]);
 
   const simplifyArray = () => {
-    // console.log("hi");
+    if (props.cart.length == 0) {
+      setCartItems([]);
+      return null;
+    }
     items = [];
     itemArray = [];
 
     props.cart.map((item) => {
-      items.push({ name: item.name, quantity: item.quantity, id: item.id });
+      items.push({
+        name: item.name,
+        quantity: item.quantity,
+        price: item.price,
+        id: item.id,
+      });
     });
 
     if (items[0].name == "") items.shift();
@@ -28,9 +38,10 @@ const Cart = (props) => {
       const o = (group[e.name] = group[e.name] || { ...e, quantity: 0 });
       o.quantity += e.quantity;
       o.id = e.id;
+      o.price = e.price;
     });
 
-    console.log(group);
+    // console.log(group);
 
     for (let i = 0; i < Object.keys(group).length; i++) {
       let key = Object.keys(group)[i];
@@ -42,6 +53,7 @@ const Cart = (props) => {
           {
             name: thing.name,
             quantity: thing.quantity,
+            price: thing.price,
             id: uniqid(),
           },
         ];
@@ -51,15 +63,21 @@ const Cart = (props) => {
           {
             name: thing.name,
             quantity: thing.quantity,
+            price: thing.price,
+
             id: uniqid(),
           },
         ];
       }
     }
 
-    console.log(itemArray);
-
     setCartItems([...itemArray]);
+  };
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleClick = () => {
+    props.setCart([]);
   };
 
   return (
@@ -75,17 +93,25 @@ const Cart = (props) => {
           </div>
         );
       })}
+      <button id="checkoutBtn" onClick={() => setIsOpen(true)}>
+        Checkout
+      </button>
+      <Checkout
+        open={isOpen}
+        cartItems={cartItems}
+        onClose={() => setIsOpen(false)}
+        handleClick={handleClick}
+      >
+        Checkout
+      </Checkout>
     </div>
   );
 };
 
-//Input field to incriment quantity
 //Display quantity in cart in navbar
 //Checkout btn clears cart
+//Do tests
 
 //Cart get input from props.items.length to display # of items currently in cart
 
-// itemArray = [];
-
-//     itemArray.map((item) => console.log(item));
 export default Cart;
