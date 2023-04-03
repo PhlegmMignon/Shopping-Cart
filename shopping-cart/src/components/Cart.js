@@ -3,8 +3,6 @@ import uniqid from "uniqid";
 import Checkout from "./Checkout";
 
 const Cart = (props) => {
-  const [cartItems, setCartItems] = useState([]);
-
   let items = [];
   let itemArray = [];
 
@@ -15,7 +13,7 @@ const Cart = (props) => {
 
   const simplifyArray = () => {
     if (props.cart.length == 0) {
-      setCartItems([]);
+      props.setCartItems([]);
       return null;
     }
     items = [];
@@ -40,8 +38,6 @@ const Cart = (props) => {
       o.id = e.id;
       o.price = e.price;
     });
-
-    // console.log(group);
 
     for (let i = 0; i < Object.keys(group).length; i++) {
       let key = Object.keys(group)[i];
@@ -71,7 +67,7 @@ const Cart = (props) => {
       }
     }
 
-    setCartItems([...itemArray]);
+    props.setCartItems([...itemArray]);
   };
 
   const [isOpen, setIsOpen] = useState(false);
@@ -83,7 +79,7 @@ const Cart = (props) => {
   return (
     <div id="cartContainer">
       <h3 id="cartTitle">Cart</h3>
-      {cartItems.map((item) => {
+      {props.cartItems.map((item) => {
         return (
           <div className="cartItemCard" key={item.id}>
             <div>
@@ -98,7 +94,7 @@ const Cart = (props) => {
       </button>
       <Checkout
         open={isOpen}
-        cartItems={cartItems}
+        cartItems={props.cartItems}
         onClose={() => setIsOpen(false)}
         handleClick={handleClick}
       >
@@ -109,7 +105,6 @@ const Cart = (props) => {
 };
 
 //Display quantity in cart in navbar
-//Checkout btn clears cart
 //Do tests
 
 //Cart get input from props.items.length to display # of items currently in cart

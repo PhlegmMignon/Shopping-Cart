@@ -12,6 +12,7 @@ function App() {
   const [cart, setCart] = useState([
     { name: "", price: "", quantity: 0, id: "" },
   ]);
+  const [cartItems, setCartItems] = useState([]);
 
   const lengthRef = useRef(0);
 
@@ -22,7 +23,15 @@ function App() {
         <Routes>
           <Route
             path="/cart"
-            element={<Cart cart={cart} setCart={setCart} shop={items} />}
+            element={
+              <Cart
+                cart={cart}
+                setCart={setCart}
+                shop={items}
+                cartItems={cartItems}
+                setCartItems={setCartItems}
+              />
+            }
           />
           <Route
             path="/shop"
@@ -33,8 +42,6 @@ function App() {
                 setCart={setCart}
                 cart={cart}
                 lengthRef={lengthRef}
-                // input={input}
-                // setInput={setInput}
               />
             }
           />
