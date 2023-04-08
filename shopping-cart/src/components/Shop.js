@@ -40,32 +40,37 @@ function Shop(props) {
     <div className="Shop">
       <h3>Shop</h3>
       <div id="itemContainer">
-        {props.items.map((item) => (
-          <div className="itemCard" key={item.id}>
-            <div className="itemName">{item.name}</div>
-            <div className="itemPrice">$ {item.price}</div>
+        {props.items.map((item) => {
+          let testid = item.name + "Select";
+          return (
+            <div className="itemCard" key={item.id}>
+              <div className="itemName">{item.name}</div>
+              <div className="itemPrice">$ {item.price}</div>
 
-            <form onSubmit={(e) => handleSubmit(item, e)}>
-              <label htmlFor="quantity">Qty: </label>
-              <input
-                type="number"
-                id="quantity"
-                name="quantity"
-                min="1"
-                max="10"
-                onChange={(e) => setInput(e.target.value)}
-              />
-              <button type="submit" id="addBtn">
-                Add to Cart
-              </button>
-            </form>
-          </div>
-        ))}
+              <form onSubmit={(e) => handleSubmit(item, e)}>
+                <label htmlFor="quantity">Qty: </label>
+                <input
+                  type="number"
+                  id="quantity"
+                  name="quantity"
+                  min="1"
+                  max="10"
+                  onChange={(e) => setInput(e.target.value)}
+                  data-testid={testid}
+                />
+                <button type="submit" id="addBtn">
+                  Add to Cart
+                </button>
+              </form>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
 }
 
-//Create a loop to make a setstate for each item?
+//There's a bug where if you input 2 bananas, add to cart, then add to cart again, your cart
+//will have quantity 0 for the 2nd set of bananas added
 
 export default Shop;

@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, act } from "@testing-library/react";
 import React, { useState } from "react";
 import App from "./App";
 import Cart from "./components/Cart";
@@ -38,12 +38,40 @@ describe("Renders each component", () => {
 });
 
 describe("Cart functionality", () => {
-  it("Navbar cart # matches cart quantity", () => {
-    const [cart, setCart] = React.useState([]);
+  // it("Navbar cart # matches cart quantity", () => {
+  //   const [cart, setCart] = React.useState([]);
 
-    render(<Navbar />);
+  //   render(<Navbar />);
 
-    screen.getByRole("");
+  //   screen.getByRole("");
+  // });
+
+  it("Cart gets condensed", async () => {
+    render(
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>
+    );
+
+    let btn = screen.getByRole("heading", { name: /Shop/i });
+
+    act(() => userEvent.click(btn));
+
+    let input = await screen.findByTestId("BananaSelect");
+
+    act(() => userEvent.type(input, "2"));
+
+    let addBtn = screen.getAllByRole("button");
+    addBtn = addBtn[1];
+
+    act(() => userEvent.click(addBtn));
+    // await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    //resolve promise and then continue with then statement
+
+    // await screen.findByRole("");
+
+    expect(btn).toBeInTheDocument();
   });
 });
 
