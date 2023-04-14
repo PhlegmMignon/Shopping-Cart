@@ -1,4 +1,4 @@
-import { render, screen, act } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import React, { useState } from "react";
 import App from "./App";
 import Cart from "./components/Cart";
@@ -20,33 +20,10 @@ describe("Renders each component", () => {
     expect(element).toBeInTheDocument();
     expect(element2).toBeInTheDocument();
   });
-
-  // it("renders cart", () => {
-  //   render(<Cart />);
-  //   const element = screen.getByText("Cart");
-
-  //   expect(element).toBeInTheDocument();
-  // });
-
-  // it("renders shop", () => {
-  //   const [items, setItems] = useState([]);
-  //   render(<Shop items={items} />);
-  //   const element = screen.getByText("Shop");
-
-  //   expect(element).toBeInTheDocument();
-  // });
 });
 
 describe("Cart functionality", () => {
-  // it("Navbar cart # matches cart quantity", () => {
-  //   const [cart, setCart] = React.useState([]);
-
-  //   render(<Navbar />);
-
-  //   screen.getByRole("");
-  // });
-
-  it("Cart gets condensed", async () => {
+  it("Items added to cart", async () => {
     render(
       <MemoryRouter>
         <App />
@@ -54,24 +31,34 @@ describe("Cart functionality", () => {
     );
 
     let btn = screen.getByRole("heading", { name: /Shop/i });
+    userEvent.click(btn);
 
-    act(() => userEvent.click(btn));
-
+    //Banana to cart
     let input = await screen.findByTestId("BananaSelect");
-
-    act(() => userEvent.type(input, "2"));
+    await userEvent.type(input, "2");
 
     let addBtn = screen.getAllByRole("button");
+    addBtn = addBtn[0];
+    userEvent.click(addBtn);
+
+    //Orange to cart
+    input = await screen.findByTestId("orangeSelect");
+    await userEvent.type(input, "3");
+
+    addBtn = screen.getAllByRole("button");
     addBtn = addBtn[1];
+    userEvent.click(addBtn);
 
-    act(() => userEvent.click(addBtn));
-    // await new Promise((resolve) => setTimeout(resolve, 1000));
+    //Switch to cart tab
+    let cart = screen.getByRole("heading", { name: /Cart/i });
+    userEvent.click(cart);
 
-    //resolve promise and then continue with then statement
+    let ele = await screen.findAllByTestId("cartItemCard");
+    let test1 = ele[0];
+    let test2 = ele[1];
 
-    // await screen.findByRole("");
-
-    expect(btn).toBeInTheDocument();
+    expect(test1.textContent).toBe("Banana2");
+    expect(test2.textContent).toBe("orange3");
   });
 });
 

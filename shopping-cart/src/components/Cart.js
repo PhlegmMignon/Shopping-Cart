@@ -68,6 +68,7 @@ const Cart = (props) => {
     }
 
     props.setCartItems([...itemArray]);
+    console.log(props.cartItems);
   };
 
   const [isOpen, setIsOpen] = useState(false);
@@ -81,11 +82,13 @@ const Cart = (props) => {
       <h3 id="cartTitle">Cart</h3>
       {props.cartItems.map((item) => {
         return (
-          <div className="cartItemCard" key={item.id}>
-            <div>
-              {item.name}
-              {item.quantity}
-            </div>
+          <div
+            className="cartItemCard"
+            key={item.id}
+            data-testid="cartItemCard"
+          >
+            {item.name}
+            {item.quantity}
           </div>
         );
       })}
